@@ -27,12 +27,12 @@ jobs:
           disable_sort: false
           gh_token: ${{ secrets.GH_KBASE }}
           commit_message: "ci: updated rss feeds"
-          committer_username: "iamsarvagyaa"
+          committer_username: "0xdotexe"
           committer_email: ${{ secrets.GH_EMAIL }}
           enable_keepalive: true
           retry_count: 6
           retry_wait_time: 10
           disable_item_validation: true
-          item_exec: |
-            if(!post.pubDate) post = null;
+#           item_exec: |
+#             if(!post.pubDate) post = null;
         continue-on-error: true
