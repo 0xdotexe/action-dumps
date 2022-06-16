@@ -24,7 +24,7 @@ jobs:
           title_max_length: "75"
           max_post_count: 50
           readme_path: "./README.md"
-          disable_sort: true
+          disable_sort: false
           gh_token: ${{ secrets.GH_KBASE }}
           commit_message: "ci: updated rss feeds"
           committer_username: "iamsarvagyaa"
