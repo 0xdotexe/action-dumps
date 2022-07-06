@@ -57,7 +57,7 @@ jobs:
         
       - name: build
         run: |
-          jekyll build && cd _site && jekyll build && mv _site ../../../buildBlog
+          jekyll build && cd _site && jekyll build && mv _site $HOME/storage/buildBlog
         working-directory: ./rawBlog
         shell: bash
         
@@ -69,11 +69,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
         working-directory: ./storage
-      
-      - name: Move blog
-        run: |
-          mv buildBlog storage/buildBlog
-        shell: bash
         
       - name: upload to ipfs
         run: yarn web3-storage-upload
