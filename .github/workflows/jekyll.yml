@@ -36,3 +36,7 @@ jobs:
         env:
           GEM_HOME: "$HOME/gems"
         shell: bash
+        
+      - name: Check Ruby is installed or not
+        run: |
+          ruby -v
