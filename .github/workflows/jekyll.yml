@@ -25,7 +25,7 @@ jobs:
 
       - name: Install Ruby, & Build dependencies
         run: |
-          apt-get install ruby-full build-essential zlib1g-dev
+          sudo apt-get install ruby-full build-essential zlib1g-dev -y
         shell: bash
 
       - name: Add env to Github
