@@ -90,7 +90,7 @@ jobs:
     steps:
       - name: Extract the output and store it in env
         run: |
-          echo "CID=$(echo ${{ join(needs.build.outputs.web3_push , '\n') }} | awk -F 'cid: ' '{print $2}')" >> $GITHUB_ENV
+          echo "CID=$(echo ${{ join(needs.build.outputs.web3_push , '\n\n\n') }} | awk -F 'cid: ' '{print $2}')" >> $GITHUB_ENV
         shell: bash
         
       - name: check env
