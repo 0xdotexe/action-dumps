@@ -1,0 +1,38 @@
+name: StaticWeb
+
+on:
+  repository_dispatch:
+    types: [deployment]
+  workflow_dispatch:
+    
+jobs:
+  build:
+    name: Build Jekyll Website
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github Checkout
+        uses: actions/checkout@v2.3.3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Install Ruby, & Build dependencies
+        run: |
+          apt-get install ruby-full build-essential zlib1g-dev
+        shell: bash
+
+      - name: Add env to Github
+        run: |
+          echo ::add-path::$GEM_HOME/bin
+          source $HOME/.bashrc
+          echo $PATH
+        env:
+          GEM_HOME: "$HOME/gems"
+        shell: bash
