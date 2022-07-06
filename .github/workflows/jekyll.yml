@@ -30,7 +30,7 @@ jobs:
 
       - name: Add env to Github
         run: |
-          echo ::add-path::$GEM_HOME/bin
+          echo $GEM_HOME/bin >> $HOME/.bashrc
           source $HOME/.bashrc
           echo $PATH
         env:
