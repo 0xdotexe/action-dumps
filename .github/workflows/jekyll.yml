@@ -40,3 +40,7 @@ jobs:
       - name: Check Ruby is installed or not
         run: |
           ruby -v
+          
+      - name: install bundler
+        run: |
+          gem install jekyll bundler
