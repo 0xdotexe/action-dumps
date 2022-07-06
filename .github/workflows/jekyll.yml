@@ -92,7 +92,7 @@ jobs:
         
       - name: cloudflare
         run: |
-          apt install jq curl -y
+          sudo apt-get install jq curl -y
           CFLARE_HOST=echo "$(curl -sL -X GET 'https://api.cloudflare.com/client/v4/zones/${{ secrets.CFLARE_ZONE }}/web3/hostnames' -H 'X-Auth-Email: ${{ secrets.GH_EMAIL }}' -H 'X-Auth-Key: ${{ secrets.CFLARE_KEY }}' -H 'Content-Type: application/json' | jq -r '.result[0].id')" >> $GITHUB_ENV
         shell: bash
         
