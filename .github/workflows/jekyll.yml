@@ -71,6 +71,19 @@ jobs:
         working-directory: ./storage
         
       - name: upload to ipfs
-        run: yarn web3-storage-upload
+        run: |
+          echo "::set-output name=uploaded_on_ipfs::$(yarn web3-storage-upload)\n"
         env:
-          WEB3_STORAGE_TOKEN: ${{ secrets.IPFS_TOKEN }}
+          WEB3_STORAGE_TOKEN: ${{ IPFS_TOKEN }}
+        working-directory: ./storage
+        id: ipfs_push
+        
+      - name: Extract the output and store it in env
+        run: |
+          echo "CID=$(echo ${{ steps.ipfs_push.outputs.stdout }} | awk -F 'cid: ' '{print $2}'" >> $GITHUB_ENV
+        shell: bash
+        
+      - name: check env
+        run: echo ${{ env.CID }}
+        shell: bash
+    continue-on-error: true
