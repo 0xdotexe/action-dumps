@@ -23,10 +23,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Install Ruby, & Build dependencies
-        run: |
-          sudo apt-get install ruby-full build-essential zlib1g-dev -y
-        shell: bash
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
 
       - name: Add env to Github
         run: |
