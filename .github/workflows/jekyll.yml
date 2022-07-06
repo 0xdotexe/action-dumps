@@ -66,6 +66,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       
+      - name: ts-node
+        run: npm i -g ts-node@latest
+        
       - name: Install dependencies
         run: yarn install
         working-directory: ./storage
@@ -80,10 +83,20 @@ jobs:
         
       - name: Extract the output and store it in env
         run: |
-          echo "CID=$(echo ${{ steps.ipfs_push.outputs.stdout }} | awk -F 'cid: ' '{print $2}'" >> $GITHUB_ENV
+          echo "CID=$(echo ${{ steps.ipfs_push.outputs.stdout }} | awk -F 'cid: ' '{print $2}')" >> $GITHUB_ENV
         shell: bash
         
       - name: check env
         run: echo ${{ env.CID }}
         shell: bash
+        
+      - name: cloudflare
+        run: |
+          apt install jq curl -y
+          CFLARE_HOST=echo "$(curl -sL -X GET 'https://api.cloudflare.com/client/v4/zones/${{ secrets.CFLARE_ZONE }}/web3/hostnames' -H 'X-Auth-Email: ${{ GH_EMAIL }}' -H 'X-Auth-Key: ${{ CFLARE_KEY }}' -H 'Content-Type: application/json' | jq -r '.result[0].id')" >> $GITHUB_ENV
+        shell: bash
+        
+      - name: check hostname
+        run: echo ${{ env.CFLARE_HOST }}
+        
     continue-on-error: true
