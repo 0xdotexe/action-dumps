@@ -43,3 +43,15 @@ jobs:
       - name: install bundler
         run: |
           gem install jekyll bundler
+          
+      - name: bundle install
+        run: |
+          bundle install
+        working-directory: ./rawBlog
+        shell: bash
+        
+      - name: build
+        run: |
+          jekyll build && cd _site && jekyll build && mv _site ../../../buildBlog
+        working-directory: ./rawBlog
+        shell: bash
