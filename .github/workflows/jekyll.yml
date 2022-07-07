@@ -78,7 +78,7 @@ jobs:
         run: |
           IPFSUP="$(yarn web3-storage-upload | awk -F 'cid: ' '{print $2}' | uniq)"
           echo "$IPFSUP"
-          echo "CID=$(echo $IPFS)" >> $GITHUB_ENV
+          echo "CID=$(echo $IPFSUP)" >> $GITHUB_ENV
         env:
           WEB3_STORAGE_TOKEN: ${{ secrets.IPFS_TOKEN }}
         working-directory: ./storage
