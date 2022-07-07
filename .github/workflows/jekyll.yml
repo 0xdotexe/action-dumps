@@ -39,7 +39,7 @@ jobs:
         
       - name: build
         run: |
-          jekyll build && cd _site && jekyll build && mv _site ../../storage/buildBlog
+          jekyll build && cd _site && jekyll build && mv _site ../../storage/buildData
         working-directory: ./rawBlog
         shell: bash
         
