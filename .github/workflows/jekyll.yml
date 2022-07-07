@@ -74,11 +74,19 @@ jobs:
       - name: Install dependencies
         run: yarn install
         working-directory: ./storage
-      
+    
+          
       - name: upload to ipfs
         id: ipfs_push
         run: |
-          echo "::set-output name=upload::$(yarn web3-storage-upload)\n\n\n"
+          ipfsup="$(yarn web3-storage-upload)"
+          ipfsup="${ipfsup//'%'/'%25'}"
+          ipfsup="${ipfsup//$'\n'/'%0A'}"
+          ipfsup="${ipfsup//$'\r'/'%0D'}"
+          
+          echo "$ipfsup"
+          echo $ipfsup
+          echo "::set-output name=upload::$ipfsup"
         env:
           WEB3_STORAGE_TOKEN: ${{ secrets.IPFS_TOKEN }}
         working-directory: ./storage
