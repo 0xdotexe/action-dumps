@@ -79,13 +79,7 @@ jobs:
       - name: upload to ipfs
         id: ipfs_push
         run: |
-          ipfsup="$(yarn web3-storage-upload)"
-          ipfsup="${ipfsup//'%'/'%25'}"
-          ipfsup="${ipfsup//$'\n'/'%0A'}"
-          ipfsup="${ipfsup//$'\r'/'%0D'}"
-          
-          echo "$ipfsup"
-          echo $ipfsup
+          ipfsup="$(yarn web3-storage-upload | awk -F 'cid: ' '{print $2}')" | uniq)"
           echo "::set-output name=upload::$ipfsup"
         env:
           WEB3_STORAGE_TOKEN: ${{ secrets.IPFS_TOKEN }}
@@ -98,7 +92,7 @@ jobs:
     steps:
       - name: Extract the output and store it in env
         run: |
-          echo "CID=$(echo ${{ needs.build.outputs.web3_push }} | awk -F 'cid: ' '{print $2}')" | uniq >> $GITHUB_ENV
+          echo "CID=$(echo ${{ needs.build.outputs.web3_push }} >> $GITHUB_ENV
         shell: bash
         
       - name: check env
