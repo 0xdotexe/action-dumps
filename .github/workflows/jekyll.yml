@@ -8,11 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    
-    strategy:
-      matrix:
-        node-version: [16.x]
         
     steps:
       - name: Github Checkout
@@ -31,19 +26,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0.0
-
-      - name: Add env to Github
-        run: |
-          echo $GEM_HOME/bin >> $HOME/.bashrc
-          source $HOME/.bashrc
-          echo $PATH
-        env:
-          GEM_HOME: "$HOME/gems"
-        shell: bash
-        
-      - name: Check Ruby is installed or not
-        run: |
-          ruby -v
           
       - name: install bundler
         run: |
@@ -61,10 +43,10 @@ jobs:
         working-directory: ./rawBlog
         shell: bash
         
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
       
       - name: ts-node
         run: npm i -g ts-node@latest
