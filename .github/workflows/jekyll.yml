@@ -77,4 +77,7 @@ jobs:
       - name: check hostname
         run: echo ${{ env.CFLARE_HOST }}
         
+      - name: abcd
+        run: |
+          curl -sL -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CFLARE_ZONE }}/web3/hostnames/${{ env.CFLARE_HOST }}" -H "X-Auth-Email: ${{ secrets.GH_EMAIL }}" -H "X-Auth-Key: ${{ secrets.CFLARE_KEY }}" -H "Content-Type: application/json" --data '{"description":"IPFS gateway.","dnslink":"/ipfs/${{ env.CID }}"}'
     continue-on-error: true
