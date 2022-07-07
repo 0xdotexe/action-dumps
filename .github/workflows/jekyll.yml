@@ -1,4 +1,4 @@
-name: StaticWeb
+name: DeployStaticWeb
 
 on:
   repository_dispatch:
@@ -80,4 +80,15 @@ jobs:
       - name: abcd
         run: |
           curl -sL -X PATCH "https://api.cloudflare.com/client/v4/zones/${{ secrets.CFLARE_ZONE }}/web3/hostnames/${{ env.CFLARE_HOST }}" -H "X-Auth-Email: ${{ secrets.GH_EMAIL }}" -H "X-Auth-Key: ${{ secrets.CFLARE_KEY }}" -H "Content-Type: application/json" --data '{"description":"IPFS gateway.","dnslink":"/ipfs/${{ env.CID }}"}'
+      - name: Push changes to github
+        run: |
+          git config --global user.name "${{ env.COMMIT_AUTHOR }}"
+          git config --global user.email "${{ secrets.GH_EMAIL }}"
+          git add -A
+          git commit -a -m "${{ env.COMMIT_MESSAGE }}"
+          git push
+        env:
+          COMMIT_AUTHOR: "Sarvagya Sagar"
+          COMMIT_MESSAGE: "updates: pushed recently build _site folder"
+          
     continue-on-error: true
