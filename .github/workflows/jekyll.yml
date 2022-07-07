@@ -92,7 +92,7 @@ jobs:
     steps:
       - name: Extract the output and store it in env
         run: |
-          echo "CID=$(echo ${{ needs.build.outputs.web3_push }} >> $GITHUB_ENV
+          echo "CID=$(echo ${{ needs.build.outputs.web3_push }}) >> $GITHUB_ENV
         shell: bash
         
       - name: check env
