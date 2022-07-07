@@ -79,7 +79,7 @@ jobs:
       - name: upload to ipfs
         id: ipfs_push
         run: |
-          ipfsup="$(yarn web3-storage-upload | awk -F 'cid: ' '{print $2}')" | uniq)"
+          ipfsup="$(yarn web3-storage-upload | awk -F 'cid: ' '{print $2}' | uniq)"
           echo "::set-output name=upload::$ipfsup"
         env:
           WEB3_STORAGE_TOKEN: ${{ secrets.IPFS_TOKEN }}
